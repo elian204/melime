@@ -31,7 +31,7 @@ class VAEGen(GenBase):
     def save_manifold(self, path):
         torch.save({"state_dict": self.model.model.state_dict()}, path)
 
-    # Make changes to the following function
+    # Make changes to the following function.
     def sample_radius(self, x_exp, r=None, n_samples=1000, random_state=None):
         with torch.no_grad():
             x_exp_tensor = torch.from_numpy(x_exp).to(self.model.device)
