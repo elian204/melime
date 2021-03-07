@@ -33,14 +33,17 @@ class VAEGen(GenBase):
 
     # Make changes to the following function.
     def sample_radius(self, x_exp, r=None, n_samples=1000, random_state=None):
+        print('Im using this fuc mada fuckerrrrrsssssssssssssssss!!!')
         with torch.no_grad():
             x_exp_tensor = torch.from_numpy(x_exp).to(self.model.device)
             mu_p, log_var_p = self.model.model.encode(x_exp_tensor.reshape(-1))
             ones = torch.ones(n_samples).to(self.model.device)
             mu_m = torch.ger(ones, mu_p)
             std_r = torch.exp(0.5 * log_var_p).to(self.model.device)
-            noise = (torch.rand(n_samples, self.model.latent_dim).to(self.model.device) - 0.5) * r
+            noise = torch.normal(0,1,(1, self.model.latent_dim))
+            # noise = (torch.rand(n_samples, self.model.latent_dim).to(self.model.device) - 0.5) * r
             z = self.model.model.reparameterize(mu_m, log_var_p)
+            print('The shape of z is....: ', z.shape)
             z = z + noise
             x_p = self.model.model.decode(z)
             x_sample = x_p.reshape(-1, self.model.input_dim).to(self.model.device_cpu).detach().numpy()
@@ -54,6 +57,16 @@ class VAEGen(GenBase):
     def sample(self, n_samples=1, random_state=None):
         # TODO: Need to be implemented.
         pass
+
+    def create_noise(self, x, n_samples):
+        counter = 0
+        while counter < n_samples:
+            new_vec = torch.normal(0, 0.3, (1, 12))
+            if
+
+        return 0
+
+
 
 
 class ModelVAE(object):
